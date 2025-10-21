@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-import { RouteRef } from '../routing';
-import { coreExtensionData, createExtensionBlueprint } from '../wiring';
+import { RouteRef, SubRouteRef } from '../routing';
+import {
+  coreExtensionData,
+  createExtensionBlueprint,
+  createExtensionInput,
+} from '../wiring';
 import { ExtensionBoundary } from '../components';
+import { toInternalSubRouteRef } from '../routing/SubRouteRef';
 
 /**
  * Createx extensions that are routable React page components.
@@ -26,6 +31,13 @@ import { ExtensionBoundary } from '../components';
 export const PageBlueprint = createExtensionBlueprint({
   kind: 'page',
   attachTo: { id: 'app/routes', input: 'routes' },
+  inputs: {
+    tabs: createExtensionInput([
+      coreExtensionData.routePath,
+      coreExtensionData.reactElement,
+      coreExtensionData.title.optional(),
+    ]),
+  },
   output: [
     coreExtensionData.routePath,
     coreExtensionData.reactElement,
@@ -47,7 +59,7 @@ export const PageBlueprint = createExtensionBlueprint({
       path: string;
       title?: string;
       loader: () => Promise<JSX.Element>;
-      routeRef?: RouteRef;
+      routeRef?: RouteRef | SubRouteRef;
     },
     { config, node },
   ) {
@@ -56,7 +68,12 @@ export const PageBlueprint = createExtensionBlueprint({
       ExtensionBoundary.lazy(node, params.loader),
     );
     if (params.routeRef) {
-      yield coreExtensionData.routeRef(params.routeRef);
+      if (params.routeRef.$$type === '@backstage/SubRouteRef') {
+        const subRouteRef = toInternalSubRouteRef(params.routeRef);
+        yield coreExtensionData.routeRef(subRouteRef.getParent());
+      } else {
+        yield coreExtensionData.routeRef(params.routeRef);
+      }
     }
     if (params.title) {
       yield coreExtensionData.title(config.title ?? params.title);

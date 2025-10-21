@@ -42,7 +42,7 @@ export default createFrontendPlugin({
   info: {
     packageJson: () => import('../../package.json'),
   },
-  'presentation/metadata/display': {
+  display: {
     icon: 'catalog',
     title: 'Software Catalog',
   },
