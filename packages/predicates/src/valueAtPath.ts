@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { JsonObject, JsonValue } from '@backstage/types';
+
 /**
  * Looks up a value by path in a nested object structure.
  *
@@ -27,7 +29,10 @@
  *
  * @internal
  */
-export function valueAtPath(value: unknown, path: string): unknown {
+export function valueAtPath(
+  value: JsonValue | undefined,
+  path: string,
+): JsonValue | undefined {
   if (!path) {
     return undefined;
   }
@@ -40,7 +45,7 @@ export function valueAtPath(value: unknown, path: string): unknown {
     return undefined;
   }
 
-  const obj = value as Record<string, unknown>;
+  const obj = value as JsonObject;
 
   for (const valueKey in obj) {
     if (!Object.hasOwn(obj, valueKey)) {

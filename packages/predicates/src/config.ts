@@ -20,7 +20,7 @@ import { createPredicateSchema } from './schema';
 import { Predicate } from './types';
 
 /**
- * Options for reading a predicate from config.
+ * Options for {@link readPredicateFromConfig}.
  *
  * @public
  */
@@ -41,7 +41,6 @@ export function readPredicateFromConfig(
   options?: ReadPredicateFromConfigOptions,
 ): Predicate {
   const key = options?.key;
-  // Use config.get() which throws good errors with full key paths
   const value = key ? config.get(key) : config.get();
 
   const schema = createPredicateSchema(z);

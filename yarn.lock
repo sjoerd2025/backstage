@@ -5397,6 +5397,7 @@ __metadata:
     "@backstage/plugin-permission-common": "workspace:^"
     "@backstage/plugin-permission-react": "workspace:^"
     "@backstage/plugin-scaffolder-common": "workspace:^"
+    "@backstage/predicates": "workspace:^"
     "@backstage/test-utils": "workspace:^"
     "@backstage/types": "workspace:^"
     "@backstage/version-bridge": "workspace:^"
@@ -7840,12 +7841,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@backstage/predicates@workspace:packages/predicates":
+"@backstage/predicates@workspace:^, @backstage/predicates@workspace:packages/predicates":
   version: 0.0.0-use.local
   resolution: "@backstage/predicates@workspace:packages/predicates"
   dependencies:
     "@backstage/cli": "workspace:^"
     "@backstage/config": "workspace:^"
+    "@backstage/errors": "workspace:^"
     "@backstage/types": "workspace:^"
     zod: "npm:^3.25.0"
   languageName: unknown

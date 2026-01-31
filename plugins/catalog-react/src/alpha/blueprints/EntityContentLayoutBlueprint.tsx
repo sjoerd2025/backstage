@@ -25,9 +25,8 @@ import {
   EntityCardType,
 } from './extensionData';
 import { JSX } from 'react';
-import { EntityPredicate } from '../predicates/types';
+import { Predicate, createPredicateSchema } from '@backstage/predicates';
 import { resolveEntityFilterData } from './resolveEntityFilterData';
-import { createEntityPredicateSchema } from '../predicates/createEntityPredicateSchema';
 import { Entity } from '@backstage/catalog-model';
 
 /** @alpha */
@@ -61,8 +60,7 @@ export const EntityContentLayoutBlueprint = createExtensionBlueprint({
   config: {
     schema: {
       type: z => z.string().optional(),
-      filter: z =>
-        z.union([z.string(), createEntityPredicateSchema(z)]).optional(),
+      filter: z => z.union([z.string(), createPredicateSchema(z)]).optional(),
     },
   },
   *factory(
@@ -70,7 +68,7 @@ export const EntityContentLayoutBlueprint = createExtensionBlueprint({
       loader,
       filter,
     }: {
-      filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+      filter?: string | Predicate | ((entity: Entity) => boolean);
       loader: () => Promise<(props: EntityContentLayoutProps) => JSX.Element>;
     },
     { node, config },

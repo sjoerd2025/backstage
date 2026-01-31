@@ -19,10 +19,9 @@ import {
   coreExtensionData,
   ExtensionBoundary,
 } from '@backstage/frontend-plugin-api';
-import { EntityPredicate } from '../predicates/types';
+import { Predicate, createPredicateSchema } from '@backstage/predicates';
 import { Entity } from '@backstage/catalog-model';
 import { resolveEntityFilterData } from './resolveEntityFilterData';
-import { createEntityPredicateSchema } from '../predicates/createEntityPredicateSchema';
 import {
   entityFilterExpressionDataRef,
   entityFilterFunctionDataRef,
@@ -38,7 +37,7 @@ export const EntityHeaderBlueprint = createExtensionBlueprint({
   },
   config: {
     schema: {
-      filter: z => createEntityPredicateSchema(z).optional(),
+      filter: z => createPredicateSchema(z).optional(),
     },
   },
   output: [
@@ -49,7 +48,7 @@ export const EntityHeaderBlueprint = createExtensionBlueprint({
   *factory(
     params: {
       loader: () => Promise<JSX.Element>;
-      filter?: EntityPredicate | ((entity: Entity) => boolean);
+      filter?: Predicate | ((entity: Entity) => boolean);
     },
     { node, config },
   ) {

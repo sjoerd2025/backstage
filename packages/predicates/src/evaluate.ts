@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { JsonValue } from '@backstage/types';
 import { Predicate, PredicateValue } from './types';
 import { valueAtPath } from './valueAtPath';
 
@@ -54,7 +55,7 @@ export function evaluatePredicate(
     if (
       !evaluatePredicateValue(
         predicate[filterKey],
-        valueAtPath(value, filterKey),
+        valueAtPath(value as JsonValue, filterKey),
       )
     ) {
       return false;

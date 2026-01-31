@@ -28,7 +28,7 @@ import kebabCase from 'lodash/kebabCase';
 import startCase from 'lodash/startCase';
 import { ComponentType } from 'react';
 import { EntityContentBlueprint } from '../blueprints/EntityContentBlueprint';
-import { EntityPredicate } from '../predicates/types';
+import { Predicate } from '@backstage/predicates';
 import { Entity } from '@backstage/catalog-model';
 
 /** @alpha */
@@ -36,7 +36,7 @@ export function convertLegacyEntityContentExtension(
   LegacyExtension: ComponentType<{}>,
   overrides?: {
     name?: string;
-    filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+    filter?: string | Predicate | ((entity: Entity) => boolean);
     path?: string;
     title?: string;
 

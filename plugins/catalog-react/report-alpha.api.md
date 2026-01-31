@@ -11,8 +11,8 @@ import { ExtensionBlueprint } from '@backstage/frontend-plugin-api';
 import { ExtensionDataRef } from '@backstage/frontend-plugin-api';
 import { ExtensionDefinition } from '@backstage/frontend-plugin-api';
 import { IconLinkVerticalProps } from '@backstage/core-components';
-import { JsonValue } from '@backstage/types';
 import { JSX as JSX_2 } from 'react';
+import { Predicate } from '@backstage/predicates';
 import { ReactNode } from 'react';
 import { ResourcePermission } from '@backstage/plugin-permission-common';
 import { RouteRef } from '@backstage/frontend-plugin-api';
@@ -74,17 +74,17 @@ export const catalogReactTranslationRef: TranslationRef<
     readonly 'inspectEntityDialog.overviewPage.metadata.title': 'Metadata';
     readonly 'inspectEntityDialog.overviewPage.labels': 'Labels';
     readonly 'inspectEntityDialog.overviewPage.status.title': 'Status';
-    readonly 'inspectEntityDialog.overviewPage.identity.title': 'Identity';
     readonly 'inspectEntityDialog.overviewPage.annotations': 'Annotations';
     readonly 'inspectEntityDialog.overviewPage.tags': 'Tags';
     readonly 'inspectEntityDialog.overviewPage.relation.title': 'Relations';
+    readonly 'inspectEntityDialog.overviewPage.identity.title': 'Identity';
     readonly 'inspectEntityDialog.yamlPage.title': 'Entity as YAML';
     readonly 'inspectEntityDialog.yamlPage.description': 'This is the raw entity data as received from the catalog, on YAML form.';
     readonly 'inspectEntityDialog.tabNames.json': 'Raw JSON';
-    readonly 'inspectEntityDialog.tabNames.yaml': 'Raw YAML';
     readonly 'inspectEntityDialog.tabNames.overview': 'Overview';
     readonly 'inspectEntityDialog.tabNames.ancestry': 'Ancestry';
     readonly 'inspectEntityDialog.tabNames.colocated': 'Colocated';
+    readonly 'inspectEntityDialog.tabNames.yaml': 'Raw YAML';
     readonly 'unregisterEntityDialog.title': 'Are you sure you want to unregister this entity?';
     readonly 'unregisterEntityDialog.cancelButtonTitle': 'Cancel';
     readonly 'unregisterEntityDialog.deleteButtonTitle': 'Delete Entity';
@@ -113,10 +113,10 @@ export const catalogReactTranslationRef: TranslationRef<
     readonly 'entityTableColumnTitle.domain': 'Domain';
     readonly 'entityTableColumnTitle.system': 'System';
     readonly 'entityTableColumnTitle.namespace': 'Namespace';
-    readonly 'entityTableColumnTitle.tags': 'Tags';
     readonly 'entityTableColumnTitle.lifecycle': 'Lifecycle';
     readonly 'entityTableColumnTitle.owner': 'Owner';
     readonly 'entityTableColumnTitle.targets': 'Targets';
+    readonly 'entityTableColumnTitle.tags': 'Tags';
     readonly 'missingAnnotationEmptyState.title': 'Missing Annotation';
     readonly 'missingAnnotationEmptyState.readMore': 'Read more';
     readonly 'missingAnnotationEmptyState.annotationYaml': 'Add the annotation to your {{entityKind}} YAML as shown in the highlighted example below:';
@@ -130,7 +130,7 @@ export function convertLegacyEntityCardExtension(
   LegacyExtension: ComponentType<{}>,
   overrides?: {
     name?: string;
-    filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+    filter?: string | Predicate | ((entity: Entity) => boolean);
     type?: EntityCardType;
   },
 ): ExtensionDefinition;
@@ -140,7 +140,7 @@ export function convertLegacyEntityContentExtension(
   LegacyExtension: ComponentType<{}>,
   overrides?: {
     name?: string;
-    filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+    filter?: string | Predicate | ((entity: Entity) => boolean);
     path?: string;
     title?: string;
     defaultPath?: [Error: `Use the 'path' override instead`];
@@ -163,7 +163,7 @@ export const EntityCardBlueprint: ExtensionBlueprint<{
   kind: 'entity-card';
   params: {
     loader: () => Promise<JSX.Element>;
-    filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+    filter?: string | Predicate | ((entity: Entity) => boolean);
     type?: EntityCardType;
   };
   output:
@@ -191,11 +191,11 @@ export const EntityCardBlueprint: ExtensionBlueprint<{
       >;
   inputs: {};
   config: {
-    filter: EntityPredicate | undefined;
+    filter: Predicate | undefined;
     type: 'content' | 'summary' | 'info' | undefined;
   };
   configInput: {
-    filter?: EntityPredicate | undefined;
+    filter?: Predicate | undefined;
     type?: 'content' | 'summary' | 'info' | undefined;
   };
   dataRefs: {
@@ -232,7 +232,7 @@ export const EntityContentBlueprint: ExtensionBlueprint<{
     group?: keyof typeof defaultEntityContentGroups | (string & {});
     loader: () => Promise<JSX.Element>;
     routeRef?: RouteRef;
-    filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+    filter?: string | Predicate | ((entity: Entity) => boolean);
   };
   output:
     | ExtensionDataRef<string, 'core.routing.path', {}>
@@ -270,11 +270,11 @@ export const EntityContentBlueprint: ExtensionBlueprint<{
   config: {
     path: string | undefined;
     title: string | undefined;
-    filter: EntityPredicate | undefined;
+    filter: Predicate | undefined;
     group: string | false | undefined;
   };
   configInput: {
-    filter?: EntityPredicate | undefined;
+    filter?: Predicate | undefined;
     title?: string | undefined;
     path?: string | undefined;
     group?: string | false | undefined;
@@ -307,7 +307,7 @@ export const EntityContentBlueprint: ExtensionBlueprint<{
 export const EntityContentLayoutBlueprint: ExtensionBlueprint<{
   kind: 'entity-content-layout';
   params: {
-    filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+    filter?: string | Predicate | ((entity: Entity) => boolean);
     loader: () => Promise<(props: EntityContentLayoutProps) => JSX_2.Element>;
   };
   output:
@@ -333,10 +333,10 @@ export const EntityContentLayoutBlueprint: ExtensionBlueprint<{
   inputs: {};
   config: {
     type: string | undefined;
-    filter: EntityPredicate | undefined;
+    filter: Predicate | undefined;
   };
   configInput: {
-    filter?: EntityPredicate | undefined;
+    filter?: Predicate | undefined;
     type?: string | undefined;
   };
   dataRefs: {
@@ -382,10 +382,10 @@ export const EntityContextMenuItemBlueprint: ExtensionBlueprint<{
       >;
   inputs: {};
   config: {
-    filter: EntityPredicate | undefined;
+    filter: Predicate | undefined;
   };
   configInput: {
-    filter?: EntityPredicate | undefined;
+    filter?: Predicate | undefined;
   };
   dataRefs: {
     filterFunction: ConfigurableExtensionDataRef<
@@ -400,7 +400,7 @@ export const EntityContextMenuItemBlueprint: ExtensionBlueprint<{
 export type EntityContextMenuItemParams = {
   useProps: UseProps;
   icon: JSX_2.Element;
-  filter?: EntityPredicate | ((entity: Entity) => boolean);
+  filter?: Predicate | ((entity: Entity) => boolean);
 };
 
 // @alpha (undocumented)
@@ -408,7 +408,7 @@ export const EntityHeaderBlueprint: ExtensionBlueprint<{
   kind: 'entity-header';
   params: {
     loader: () => Promise<JSX.Element>;
-    filter?: EntityPredicate | ((entity: Entity) => boolean);
+    filter?: Predicate | ((entity: Entity) => boolean);
   };
   output:
     | ExtensionDataRef<
@@ -434,10 +434,10 @@ export const EntityHeaderBlueprint: ExtensionBlueprint<{
       >;
   inputs: {};
   config: {
-    filter: EntityPredicate | undefined;
+    filter: Predicate | undefined;
   };
   configInput: {
-    filter?: EntityPredicate | undefined;
+    filter?: Predicate | undefined;
   };
   dataRefs: {
     filterFunction: ConfigurableExtensionDataRef<
@@ -458,7 +458,7 @@ export const EntityIconLinkBlueprint: ExtensionBlueprint<{
   kind: 'entity-icon-link';
   params: {
     useProps: () => Omit<IconLinkVerticalProps, 'color'>;
-    filter?: EntityPredicate | ((entity: Entity) => boolean);
+    filter?: Predicate | ((entity: Entity) => boolean);
   };
   output:
     | ExtensionDataRef<
@@ -484,10 +484,10 @@ export const EntityIconLinkBlueprint: ExtensionBlueprint<{
   config: {
     label: string | undefined;
     title: string | undefined;
-    filter: EntityPredicate | undefined;
+    filter: Predicate | undefined;
   };
   configInput: {
-    filter?: EntityPredicate | undefined;
+    filter?: Predicate | undefined;
     label?: string | undefined;
     title?: string | undefined;
   };
@@ -511,62 +511,20 @@ export const EntityIconLinkBlueprint: ExtensionBlueprint<{
 }>;
 
 // @alpha (undocumented)
-export type EntityPredicate =
-  | EntityPredicateExpression
-  | EntityPredicatePrimitive
-  | {
-      $all: EntityPredicate[];
-    }
-  | {
-      $any: EntityPredicate[];
-    }
-  | {
-      $not: EntityPredicate;
-    };
-
-// @alpha (undocumented)
-export type EntityPredicateExpression = {
-  [KPath in string]: EntityPredicateValue;
-} & {
-  [KPath in `$${string}`]: never;
-};
-
-// @alpha (undocumented)
-export type EntityPredicatePrimitive = string | number | boolean;
-
-// @alpha
-export function entityPredicateToFilterFunction<T extends JsonValue>(
-  entityPredicate: EntityPredicate,
-): (value: T) => boolean;
-
-// @alpha (undocumented)
-export type EntityPredicateValue =
-  | EntityPredicatePrimitive
-  | {
-      $exists: boolean;
-    }
-  | {
-      $in: EntityPredicatePrimitive[];
-    }
-  | {
-      $contains: EntityPredicate;
-    };
-
-// @alpha (undocumented)
 export const EntityTableColumnTitle: ({
   translationKey,
 }: EntityTableColumnTitleProps) =>
-  | 'Title'
-  | 'System'
   | 'Domain'
+  | 'System'
+  | 'Name'
+  | 'Description'
   | 'Lifecycle'
   | 'Namespace'
   | 'Owner'
   | 'Tags'
   | 'Type'
-  | 'Name'
-  | 'Description'
   | 'Targets'
+  | 'Title'
   | 'Label';
 
 // @alpha (undocumented)

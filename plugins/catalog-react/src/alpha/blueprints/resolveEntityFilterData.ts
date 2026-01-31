@@ -18,16 +18,13 @@ import {
   entityFilterExpressionDataRef,
   entityFilterFunctionDataRef,
 } from './extensionData';
-import {
-  EntityPredicate,
-  entityPredicateToFilterFunction,
-} from '../predicates';
+import { Predicate, predicateToFilterFunction } from '@backstage/predicates';
 import { Entity } from '@backstage/catalog-model';
 import { AppNode } from '@backstage/frontend-plugin-api';
 
 export function* resolveEntityFilterData(
-  filter: ((entity: Entity) => boolean) | EntityPredicate | string | undefined,
-  config: { filter?: EntityPredicate | string },
+  filter: ((entity: Entity) => boolean) | Predicate | string | undefined,
+  config: { filter?: Predicate | string },
   node: AppNode,
 ) {
   if (typeof config.filter === 'string') {
@@ -37,9 +34,7 @@ export function* resolveEntityFilterData(
     );
     yield entityFilterExpressionDataRef(config.filter);
   } else if (config.filter) {
-    yield entityFilterFunctionDataRef(
-      entityPredicateToFilterFunction(config.filter),
-    );
+    yield entityFilterFunctionDataRef(predicateToFilterFunction(config.filter));
   } else if (typeof filter === 'function') {
     yield entityFilterFunctionDataRef(filter);
   } else if (typeof filter === 'string') {
@@ -49,6 +44,6 @@ export function* resolveEntityFilterData(
     );
     yield entityFilterExpressionDataRef(filter);
   } else if (filter) {
-    yield entityFilterFunctionDataRef(entityPredicateToFilterFunction(filter));
+    yield entityFilterFunctionDataRef(predicateToFilterFunction(filter));
   }
 }

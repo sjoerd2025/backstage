@@ -20,8 +20,7 @@ import {
   createExtensionDataRef,
 } from '@backstage/frontend-plugin-api';
 
-import { EntityPredicate } from '../predicates/types';
-import { createEntityPredicateSchema } from '../predicates/createEntityPredicateSchema';
+import { Predicate, createPredicateSchema } from '@backstage/predicates';
 
 import {
   entityFilterExpressionDataRef,
@@ -54,13 +53,13 @@ export const EntityIconLinkBlueprint = createExtensionBlueprint({
     schema: {
       label: z => z.string().optional(),
       title: z => z.string().optional(),
-      filter: z => createEntityPredicateSchema(z).optional(),
+      filter: z => createPredicateSchema(z).optional(),
     },
   },
   *factory(
     params: {
       useProps: () => Omit<IconLinkVerticalProps, 'color'>;
-      filter?: EntityPredicate | ((entity: Entity) => boolean);
+      filter?: Predicate | ((entity: Entity) => boolean);
     },
     { config, node },
   ) {

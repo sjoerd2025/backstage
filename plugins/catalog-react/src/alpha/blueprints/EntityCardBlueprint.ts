@@ -26,8 +26,7 @@ import {
   entityCardTypes,
   EntityCardType,
 } from './extensionData';
-import { createEntityPredicateSchema } from '../predicates/createEntityPredicateSchema';
-import { EntityPredicate } from '../predicates';
+import { Predicate, createPredicateSchema } from '@backstage/predicates';
 import { resolveEntityFilterData } from './resolveEntityFilterData';
 import { Entity } from '@backstage/catalog-model';
 
@@ -51,8 +50,7 @@ export const EntityCardBlueprint = createExtensionBlueprint({
   },
   config: {
     schema: {
-      filter: z =>
-        z.union([z.string(), createEntityPredicateSchema(z)]).optional(),
+      filter: z => z.union([z.string(), createPredicateSchema(z)]).optional(),
       type: z => z.enum(entityCardTypes).optional(),
     },
   },
@@ -63,7 +61,7 @@ export const EntityCardBlueprint = createExtensionBlueprint({
       type,
     }: {
       loader: () => Promise<JSX.Element>;
-      filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+      filter?: string | Predicate | ((entity: Entity) => boolean);
       type?: EntityCardType;
     },
     { node, config },

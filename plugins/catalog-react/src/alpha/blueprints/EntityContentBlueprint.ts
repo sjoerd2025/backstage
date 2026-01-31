@@ -27,9 +27,8 @@ import {
   entityContentGroupDataRef,
   defaultEntityContentGroups,
 } from './extensionData';
-import { EntityPredicate } from '../predicates/types';
+import { Predicate, createPredicateSchema } from '@backstage/predicates';
 import { resolveEntityFilterData } from './resolveEntityFilterData';
-import { createEntityPredicateSchema } from '../predicates/createEntityPredicateSchema';
 import { Entity } from '@backstage/catalog-model';
 
 /**
@@ -58,8 +57,7 @@ export const EntityContentBlueprint = createExtensionBlueprint({
     schema: {
       path: z => z.string().optional(),
       title: z => z.string().optional(),
-      filter: z =>
-        z.union([z.string(), createEntityPredicateSchema(z)]).optional(),
+      filter: z => z.union([z.string(), createPredicateSchema(z)]).optional(),
       group: z => z.literal(false).or(z.string()).optional(),
     },
   },
@@ -82,7 +80,7 @@ export const EntityContentBlueprint = createExtensionBlueprint({
       group?: keyof typeof defaultEntityContentGroups | (string & {});
       loader: () => Promise<JSX.Element>;
       routeRef?: RouteRef;
-      filter?: string | EntityPredicate | ((entity: Entity) => boolean);
+      filter?: string | Predicate | ((entity: Entity) => boolean);
     },
     { node, config },
   ) {
