@@ -23,6 +23,7 @@
     ]
   },
   "scripts": {
+    "build": "nx next:build && echo 'Build complete'",
     "build-storybook": "storybook build --output-dir dist-storybook",
     "build-storybook:chromatic": "STORYBOOK_STORY_SET=chromatic storybook build --stats-json --output-dir dist-storybook",
     "build:all": "backstage-cli repo build --all",
