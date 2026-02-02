@@ -174,6 +174,10 @@ describe('Index page', () => {
 
 That's all for testing features!
 
+## Extension tree snapshots
+
+The `snapshot()` method on `ExtensionTester` returns a tree-shaped representation of the resolved extension hierarchy, which is convenient to use with Jest's `toMatchInlineSnapshot()` for verifying extension structure in tests.
+
 ## Missing something?
 
 If there's anything else you think needs to be covered in the docs or that you think isn't covered by the test utilities, please create an issue in the Backstage repository. You are always welcome to contribute as well!

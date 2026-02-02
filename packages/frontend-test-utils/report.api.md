@@ -61,6 +61,14 @@ export class ExtensionQuery<UOutput extends ExtensionDataRef> {
   get node(): AppNode;
 }
 
+// @public
+export interface ExtensionSnapshotNode {
+  children?: Record<string, ExtensionSnapshotNode[]>;
+  disabled?: true;
+  id: string;
+  outputs?: string[];
+}
+
 // @public (undocumented)
 export class ExtensionTester<UOutput extends ExtensionDataRef> {
   // (undocumented)
@@ -84,6 +92,7 @@ export class ExtensionTester<UOutput extends ExtensionDataRef> {
   ): ExtensionQuery<NonNullable<T['output']>>;
   // (undocumented)
   reactElement(): JSX.Element;
+  snapshot(): ExtensionSnapshotNode;
 }
 
 // @public
