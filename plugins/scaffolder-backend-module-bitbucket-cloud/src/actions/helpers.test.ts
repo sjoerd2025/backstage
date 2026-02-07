@@ -65,15 +65,6 @@ describe('helpers', () => {
       expect(client).toBeDefined();
     });
 
-    it('should create client with username and appPassword', async () => {
-      const client = await getBitbucketClient({
-        username: 'test-user',
-        appPassword: 'app-password',
-      });
-
-      expect(client).toBeDefined();
-    });
-
     it('should throw error when no credentials provided', async () => {
       await expect(getBitbucketClient({})).rejects.toThrow(
         /Authorization has not been provided for Bitbucket Cloud/,
@@ -103,32 +94,6 @@ describe('helpers', () => {
       const result = await getAuthorizationHeader({
         username: 'test-user',
         token: 'api-token',
-      });
-
-      const expectedAuth = Buffer.from('test-user:api-token', 'utf8').toString(
-        'base64',
-      );
-      expect(result).toBe(`Basic ${expectedAuth}`);
-    });
-
-    it('should return Basic auth for username and appPassword', async () => {
-      const result = await getAuthorizationHeader({
-        username: 'test-user',
-        appPassword: 'app-password',
-      });
-
-      const expectedAuth = Buffer.from(
-        'test-user:app-password',
-        'utf8',
-      ).toString('base64');
-      expect(result).toBe(`Basic ${expectedAuth}`);
-    });
-
-    it('should prefer token over appPassword when both are provided', async () => {
-      const result = await getAuthorizationHeader({
-        username: 'test-user',
-        token: 'api-token',
-        appPassword: 'app-password',
       });
 
       const expectedAuth = Buffer.from('test-user:api-token', 'utf8').toString(
@@ -188,31 +153,6 @@ describe('helpers', () => {
       const result = await getGitAuth({
         username: 'test-user',
         token: 'api-token',
-      });
-
-      expect(result).toEqual({
-        username: 'x-bitbucket-api-token-auth',
-        password: 'api-token',
-      });
-    });
-
-    it('should return username and appPassword for username + appPassword', async () => {
-      const result = await getGitAuth({
-        username: 'test-user',
-        appPassword: 'app-password',
-      });
-
-      expect(result).toEqual({
-        username: 'test-user',
-        password: 'app-password',
-      });
-    });
-
-    it('should prefer token over appPassword when both are provided', async () => {
-      const result = await getGitAuth({
-        username: 'test-user',
-        token: 'api-token',
-        appPassword: 'app-password',
       });
 
       expect(result).toEqual({

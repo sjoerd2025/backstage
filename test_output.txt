@@ -1,0 +1,86 @@
+true
+  console.log
+    [46m[30m BITBUCKET CLOUD API LATEST UPDATES: [0m[36m https://developer.atlassian.com/cloud/bitbucket [0m
+
+      at log (../../../node_modules/bitbucket/lib/index.umd.js:15:102410)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    [46m[30m BITBUCKET CLOUD API LATEST UPDATES: [0m[36m https://developer.atlassian.com/cloud/bitbucket [0m
+
+      at log (../../../node_modules/bitbucket/lib/index.umd.js:15:102410)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    [46m[30m BITBUCKET CLOUD API LATEST UPDATES: [0m[36m https://developer.atlassian.com/cloud/bitbucket [0m
+
+      at log (../../../node_modules/bitbucket/lib/index.umd.js:15:102410)
+          at Array.forEach (<anonymous>)
+
+PASS src/actions/helpers.test.ts
+  helpers
+    getBitbucketClient
+      ✓ should create client with OAuth token (171 ms)
+      ✓ should create client with standalone token (67 ms)
+      ✓ should create client with username and API token (68 ms)
+      ✓ should throw error when no credentials provided (10 ms)
+    getAuthorizationHeader
+      ✓ should return Bearer token for OAuth credentials (1 ms)
+      ✓ should return Basic auth for username and token
+      ✓ should return Bearer token for standalone token (1 ms)
+      ✓ should throw error when no credentials provided (2 ms)
+    getGitAuth
+      ✓ should return x-token-auth for OAuth credentials (1 ms)
+      ✓ should return x-token-auth for standalone token
+      ✓ should return x-bitbucket-api-token-auth for username + API token (1 ms)
+      ✓ should throw error when no credentials provided (1 ms)
+      ✓ should throw error when only username is provided (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        1.115 s
+Ran all test suites matching src/actions/helpers.test.ts.
+
+  console.log
+    [46m[30m BITBUCKET CLOUD API LATEST UPDATES: [0m[36m https://developer.atlassian.com/cloud/bitbucket [0m
+
+      at log (../../../node_modules/bitbucket/lib/index.umd.js:15:102410)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    [46m[30m BITBUCKET CLOUD API LATEST UPDATES: [0m[36m https://developer.atlassian.com/cloud/bitbucket [0m
+
+      at log (../../../node_modules/bitbucket/lib/index.umd.js:15:102410)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    [46m[30m BITBUCKET CLOUD API LATEST UPDATES: [0m[36m https://developer.atlassian.com/cloud/bitbucket [0m
+
+      at log (../../../node_modules/bitbucket/lib/index.umd.js:15:102410)
+          at Array.forEach (<anonymous>)
+
+PASS src/actions/helpers.test.ts
+  helpers
+    getBitbucketClient
+      ✓ should create client with OAuth token (235 ms)
+      ✓ should create client with standalone token (134 ms)
+      ✓ should create client with username and API token (78 ms)
+      ✓ should throw error when no credentials provided (13 ms)
+    getAuthorizationHeader
+      ✓ should return Bearer token for OAuth credentials (9 ms)
+      ✓ should return Basic auth for username and token (1 ms)
+      ✓ should return Bearer token for standalone token (1 ms)
+      ✓ should throw error when no credentials provided (2 ms)
+    getGitAuth
+      ✓ should return x-token-auth for OAuth credentials (3 ms)
+      ✓ should return x-token-auth for standalone token (1 ms)
+      ✓ should return x-bitbucket-api-token-auth for username + API token (1 ms)
+      ✓ should throw error when no credentials provided (2 ms)
+      ✓ should throw error when only username is provided (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        1.659 s
+Ran all test suites matching src/actions/helpers.test.ts.

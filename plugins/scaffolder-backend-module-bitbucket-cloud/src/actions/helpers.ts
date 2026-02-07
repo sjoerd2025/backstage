@@ -20,7 +20,6 @@ import { getBitbucketCloudOAuthToken } from '@backstage/integration';
 export const getBitbucketClient = async (config: {
   token?: string;
   username?: string;
-  appPassword?: string;
   clientId?: string;
   clientSecret?: string;
 }) => {
@@ -56,25 +55,13 @@ export const getBitbucketClient = async (config: {
     });
   }
 
-  // TODO: appPassword can be removed once fully
-  // deprecated by BitBucket on 9th June 2026.
-  if (config.username && config.appPassword) {
-    return new Bitbucket({
-      auth: {
-        username: config.username,
-        password: config.appPassword,
-      },
-    });
-  }
-
   throw new Error(
-    `Authorization has not been provided for Bitbucket Cloud. Please provide either OAuth credentials (clientId/clientSecret), username and token, or username and appPassword in the Integrations config`,
+    `Authorization has not been provided for Bitbucket Cloud. Please provide either OAuth credentials (clientId/clientSecret), or username and token in the Integrations config`,
   );
 };
 
 export const getAuthorizationHeader = async (config: {
   username?: string;
-  appPassword?: string;
   token?: string;
   clientId?: string;
   clientSecret?: string;
@@ -88,13 +75,8 @@ export const getAuthorizationHeader = async (config: {
     return `Bearer ${token}`;
   }
 
-  // TODO: appPassword can be removed once fully
-  // deprecated by BitBucket on 9th June 2026.
-  if (config.username && (config.token ?? config.appPassword)) {
-    const buffer = Buffer.from(
-      `${config.username}:${config.token ?? config.appPassword}`,
-      'utf8',
-    );
+  if (config.username && config.token) {
+    const buffer = Buffer.from(`${config.username}:${config.token}`, 'utf8');
     return `Basic ${buffer.toString('base64')}`;
   }
 
@@ -103,13 +85,12 @@ export const getAuthorizationHeader = async (config: {
   }
 
   throw new Error(
-    `Authorization has not been provided for Bitbucket Cloud. Please provide either OAuth credentials (clientId/clientSecret), username and token, or username and appPassword in the Integrations config`,
+    `Authorization has not been provided for Bitbucket Cloud. Please provide either OAuth credentials (clientId/clientSecret), or username and token in the Integrations config`,
   );
 };
 
 export const getGitAuth = async (config: {
   username?: string;
-  appPassword?: string;
   token?: string;
   clientId?: string;
   clientSecret?: string;
@@ -144,16 +125,7 @@ export const getGitAuth = async (config: {
     };
   }
 
-  // TODO: appPassword can be removed once fully
-  // deprecated by BitBucket on 9th June 2026.
-  if (config.username && config.appPassword) {
-    return {
-      username: config.username,
-      password: config.appPassword,
-    };
-  }
-
   throw new Error(
-    `Authorization has not been provided for Bitbucket Cloud. Please provide either OAuth credentials (clientId/clientSecret), username and token, or username and appPassword in the Integrations config`,
+    `Authorization has not been provided for Bitbucket Cloud. Please provide either OAuth credentials (clientId/clientSecret), or username and token in the Integrations config`,
   );
 };

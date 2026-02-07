@@ -1,0 +1,22 @@
+true
+PASS src/actions/bitbucketCloudBranchRestriction.test.ts
+  bitbucketCloud:branchRestriction:create
+    ✓ getBitbucketClient should return the correct headers with username and token (8 ms)
+    ✓ getBitbucketClient should throw if only username is provided (9 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        1.227 s
+Ran all test suites matching src/actions/bitbucketCloudBranchRestriction.test.ts.
+
+PASS src/actions/bitbucketCloudBranchRestriction.test.ts
+  bitbucketCloud:branchRestriction:create
+    ✓ getBitbucketClient should return the correct headers with username and token (11 ms)
+    ✓ getBitbucketClient should throw if only username is provided (11 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        1.84 s
+Ran all test suites matching src/actions/bitbucketCloudBranchRestriction.test.ts.

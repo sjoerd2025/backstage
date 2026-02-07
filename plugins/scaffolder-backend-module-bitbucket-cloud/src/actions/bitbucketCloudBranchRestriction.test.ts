@@ -22,27 +22,23 @@ jest.mock('bitbucket', () => ({
 }));
 
 describe('bitbucketCloud:branchRestriction:create', () => {
-  it('getBitbucketClient should return the correct headers with username and password', async () => {
+  it('getBitbucketClient should return the correct headers with username and token', async () => {
     expect.assertions(1);
     const username = 'username';
-    const password = 'password';
-    await getBitbucketClient({ username: username, appPassword: password });
+    const token = 'token';
+    await getBitbucketClient({ username: username, token: token });
     expect(Bitbucket).toHaveBeenCalledWith({
       auth: {
         username: username,
-        password: password,
+        password: token,
       },
     });
   });
 
-  it('getBitbucketClient should throw if only one of username or password is provided', async () => {
-    expect.assertions(2);
+  it('getBitbucketClient should throw if only username is provided', async () => {
+    expect.assertions(1);
     const username = 'username';
-    const password = 'password';
 
     await expect(getBitbucketClient({ username })).rejects.toThrow(Error);
-    await expect(getBitbucketClient({ appPassword: password })).rejects.toThrow(
-      Error,
-    );
   });
 });
