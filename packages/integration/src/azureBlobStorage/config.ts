@@ -28,6 +28,15 @@ export type AzureBlobStorageIntegrationConfig = {
    * The name of the Azure Storage Account, e.g., "mystorageaccount".
    */
   accountName?: string;
+  /**
+   * The subscription ID of the Azure Storage Account.
+   */
+  subscriptionId?: string;
+
+  /**
+   * The resource group name of the Azure Storage Account.
+   */
+  resourceGroup?: string;
 
   /**
    * The primary or secondary key for the Azure Storage Account.
@@ -90,6 +99,8 @@ export function readAzureBlobStorageIntegrationConfig(
 ): AzureBlobStorageIntegrationConfig {
   const endpoint = config.getOptionalString('endpoint');
   const accountName = config.getString('accountName');
+  const subscriptionId = config.getOptionalString('subscriptionId')?.trim();
+  const resourceGroup = config.getOptionalString('resourceGroup')?.trim();
   const accountKey = config.getOptionalString('accountKey')?.trim();
   const sasToken = config.getOptionalString('sasToken')?.trim();
   const connectionString = config.getOptionalString('connectionString')?.trim();
@@ -139,6 +150,8 @@ export function readAzureBlobStorageIntegrationConfig(
     host,
     endpoint,
     accountName,
+    subscriptionId,
+    resourceGroup,
     accountKey,
     sasToken,
     connectionString,

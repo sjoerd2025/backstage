@@ -65,7 +65,32 @@ export class AzureBlobStorageIntergation implements ScmIntegration {
   }
 
   resolveEditUrl(url: string): string {
-    // TODO: Implement edit URL for azureBlobStorage
+    const { accountName, subscriptionId, resourceGroup } =
+      this.integrationConfig;
+
+    if (accountName && subscriptionId && resourceGroup) {
+      try {
+        const urlObj = new URL(url);
+        // The path is expected to be /container/path/to/blob
+        const parts = urlObj.pathname.split('/');
+        // parts[0] is empty string because pathname starts with /
+        if (parts.length >= 3) {
+          const containerName = parts[1];
+          const blobPath = parts.slice(2).join('/');
+
+          const storageAccountId = encodeURIComponent(
+            `/subscriptions/${subscriptionId}/resourceGroups/${resourceGroup}/providers/Microsoft.Storage/storageAccounts/${accountName}`,
+          );
+
+          return `https://portal.azure.com/#view/Microsoft_Azure_Storage/BlobFileHandlerBlade/storageAccountId/${storageAccountId}/blobName/${encodeURIComponent(
+            blobPath,
+          )}/containerName/${encodeURIComponent(containerName)}`;
+        }
+      } catch {
+        // Ignore errors and fallback to original URL
+      }
+    }
+
     return url;
   }
 }

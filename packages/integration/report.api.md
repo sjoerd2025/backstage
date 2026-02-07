@@ -76,6 +76,8 @@ export type AwsS3IntegrationConfig = {
 // @public
 export type AzureBlobStorageIntegrationConfig = {
   accountName?: string;
+  subscriptionId?: string;
+  resourceGroup?: string;
   accountKey?: string;
   sasToken?: string;
   connectionString?: string;
