@@ -62,17 +62,54 @@ describe('AzureBlobStorageIntegration', () => {
     });
   });
 
-  it('resolve edit URL', () => {
-    const integration = new AzureBlobStorageIntergation({
-      host: 'myaccount.blob.core.windows.net',
-    } as any);
+  describe('resolveEditUrl', () => {
+    it('returns the input URL when subscription details are missing', () => {
+      const integration = new AzureBlobStorageIntergation({
+        host: 'myaccount.blob.core.windows.net',
+        accountName: 'myaccount',
+      } as any);
 
-    // TODO: The Azure Blob Storage integration doesn't support resolving an edit URL,
-    // instead we keep the input URL.
-    expect(
-      integration.resolveEditUrl(
-        'https://myaccount.blob.core.windows.net/container/file.yaml',
-      ),
-    ).toBe('https://myaccount.blob.core.windows.net/container/file.yaml');
+      expect(
+        integration.resolveEditUrl(
+          'https://myaccount.blob.core.windows.net/container/file.yaml',
+        ),
+      ).toBe('https://myaccount.blob.core.windows.net/container/file.yaml');
+    });
+
+    it('returns the Azure Portal URL when subscription details are present', () => {
+      const integration = new AzureBlobStorageIntergation({
+        host: 'myaccount.blob.core.windows.net',
+        accountName: 'myaccount',
+        subscriptionId: 'sub-id',
+        resourceGroup: 'resource-group',
+      } as any);
+
+      const expectedUrl =
+        'https://portal.azure.com/#view/Microsoft_Azure_Storage/BlobFileHandlerBlade/storageAccountId/%2Fsubscriptions%2Fsub-id%2FresourceGroups%2Fresource-group%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fmyaccount/blobName/file.yaml/containerName/container';
+
+      expect(
+        integration.resolveEditUrl(
+          'https://myaccount.blob.core.windows.net/container/file.yaml',
+        ),
+      ).toBe(expectedUrl);
+    });
+
+    it('handles blob paths with slashes', () => {
+      const integration = new AzureBlobStorageIntergation({
+        host: 'myaccount.blob.core.windows.net',
+        accountName: 'myaccount',
+        subscriptionId: 'sub-id',
+        resourceGroup: 'resource-group',
+      } as any);
+
+      const expectedUrl =
+        'https://portal.azure.com/#view/Microsoft_Azure_Storage/BlobFileHandlerBlade/storageAccountId/%2Fsubscriptions%2Fsub-id%2FresourceGroups%2Fresource-group%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fmyaccount/blobName/folder%2Ffile.yaml/containerName/container';
+
+      expect(
+        integration.resolveEditUrl(
+          'https://myaccount.blob.core.windows.net/container/folder/file.yaml',
+        ),
+      ).toBe(expectedUrl);
+    });
   });
 });

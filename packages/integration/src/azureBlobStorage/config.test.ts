@@ -27,6 +27,29 @@ describe('readAzureBlobStorageIntegrationConfig', () => {
     return new ConfigReader(data);
   }
 
+  it('reads valid configuration with subscriptionId and resourceGroup', () => {
+    const output = readAzureBlobStorageIntegrationConfig(
+      buildConfig({
+        accountName: 'mystorageaccount',
+        subscriptionId: 'mySub',
+        resourceGroup: 'myGroup',
+        accountKey: 'someAccountKey',
+      }),
+    );
+    expect(output).toEqual({
+      host: 'blob.core.windows.net',
+      endpoint: undefined,
+      accountName: 'mystorageaccount',
+      subscriptionId: 'mySub',
+      resourceGroup: 'myGroup',
+      accountKey: 'someAccountKey',
+      sasToken: undefined,
+      connectionString: undefined,
+      endpointSuffix: undefined,
+      aadCredential: undefined,
+    });
+  });
+
   it('reads valid configuration with accountKey', () => {
     const output = readAzureBlobStorageIntegrationConfig(
       buildConfig({
@@ -38,6 +61,8 @@ describe('readAzureBlobStorageIntegrationConfig', () => {
       host: 'blob.core.windows.net',
       endpoint: undefined,
       accountName: 'mystorageaccount',
+      subscriptionId: undefined,
+      resourceGroup: undefined,
       accountKey: 'someAccountKey',
       sasToken: undefined,
       connectionString: undefined,
@@ -58,6 +83,8 @@ describe('readAzureBlobStorageIntegrationConfig', () => {
       host: 'blob.core.windows.net',
       endpoint: 'https://blob.core.windows.net',
       accountName: 'mystorageaccount',
+      subscriptionId: undefined,
+      resourceGroup: undefined,
       accountKey: undefined,
       sasToken: 'someSASToken',
       connectionString: undefined,
@@ -81,6 +108,8 @@ describe('readAzureBlobStorageIntegrationConfig', () => {
       host: 'blob.core.windows.net',
       endpoint: undefined,
       accountName: 'mystorageaccount',
+      subscriptionId: undefined,
+      resourceGroup: undefined,
       accountKey: undefined,
       sasToken: undefined,
       connectionString: undefined,
@@ -104,6 +133,8 @@ describe('readAzureBlobStorageIntegrationConfig', () => {
       host: 'custom.blob.core.windows.net',
       endpoint: 'https://custom.blob.core.windows.net',
       accountName: 'customaccount',
+      subscriptionId: undefined,
+      resourceGroup: undefined,
       accountKey: undefined,
       sasToken: undefined,
       connectionString: undefined,
@@ -189,6 +220,8 @@ describe('readAzureBlobStorageIntegrationConfigs', () => {
         host: 'blob.core.windows.net',
         endpoint: undefined,
         accountName: 'account1',
+        subscriptionId: undefined,
+        resourceGroup: undefined,
         accountKey: 'someAccountKey',
         sasToken: undefined,
         connectionString: undefined,
@@ -199,6 +232,8 @@ describe('readAzureBlobStorageIntegrationConfigs', () => {
         host: 'custom.blob.core.windows.net',
         endpoint: 'https://custom.blob.core.windows.net',
         accountName: 'account2',
+        subscriptionId: undefined,
+        resourceGroup: undefined,
         accountKey: undefined,
         sasToken: undefined,
         connectionString: undefined,
@@ -223,6 +258,8 @@ describe('readAzureBlobStorageIntegrationConfigs', () => {
         host: 'custom.blob.core.windows.net',
         endpoint: 'https://custom.blob.core.windows.net',
         accountName: 'account2',
+        subscriptionId: undefined,
+        resourceGroup: undefined,
         accountKey: undefined,
         sasToken: undefined,
         connectionString: undefined,
@@ -233,6 +270,8 @@ describe('readAzureBlobStorageIntegrationConfigs', () => {
         host: 'blob.core.windows.net',
         endpoint: undefined,
         accountName: undefined,
+        subscriptionId: undefined,
+        resourceGroup: undefined,
         accountKey: undefined,
         sasToken: undefined,
         connectionString: undefined,
@@ -253,6 +292,8 @@ describe('readAzureBlobStorageIntegrationConfigs', () => {
         host: 'blob.core.windows.net',
         endpoint: undefined,
         accountName: 'account1',
+        subscriptionId: undefined,
+        resourceGroup: undefined,
         accountKey: undefined,
         sasToken: undefined,
         connectionString: undefined,
