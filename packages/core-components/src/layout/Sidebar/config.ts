@@ -69,14 +69,17 @@ export const sidebarConfig = {
 
 export const makeSidebarConfig = (
   customSidebarConfig: Partial<SidebarOptions>,
-) => ({
-  ...sidebarConfig,
-  ...customSidebarConfig,
-  iconContainerWidth: sidebarConfig.drawerWidthClosed,
-  iconSize: sidebarConfig.drawerWidthClosed - sidebarConfig.iconPadding * 2,
-  userBadgeDiameter:
-    sidebarConfig.drawerWidthClosed - sidebarConfig.userBadgePadding * 2,
-});
+) => {
+  const drawerWidthClosed =
+    customSidebarConfig.drawerWidthClosed ?? sidebarConfig.drawerWidthClosed;
+  return {
+    ...sidebarConfig,
+    ...customSidebarConfig,
+    iconContainerWidth: drawerWidthClosed,
+    iconSize: drawerWidthClosed - sidebarConfig.iconPadding * 2,
+    userBadgeDiameter: drawerWidthClosed - sidebarConfig.userBadgePadding * 2,
+  };
+};
 
 /** @internal */
 export type SubmenuConfig = {
