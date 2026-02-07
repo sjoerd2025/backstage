@@ -309,7 +309,7 @@ export class KubernetesClientBasedFetcher implements KubernetesFetcher {
     const url = new URL(cluster.server);
     if (url.protocol === 'https:') {
       requestInit.agent = new https.Agent({
-        ca: fs.readFileSync(cluster.caFile as string),
+        ca: await fs.readFile(cluster.caFile as string),
       });
     }
     return [url, requestInit];
