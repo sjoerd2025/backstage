@@ -76,10 +76,7 @@ export const getAuthorizationHeader = async (config: {
   }
 
   if (config.username && config.token) {
-    const buffer = Buffer.from(
-      `${config.username}:${config.token}`,
-      'utf8',
-    );
+    const buffer = Buffer.from(`${config.username}:${config.token}`, 'utf8');
     return `Basic ${buffer.toString('base64')}`;
   }
 
