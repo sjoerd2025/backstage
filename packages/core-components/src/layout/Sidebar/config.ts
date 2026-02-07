@@ -70,14 +70,15 @@ export const sidebarConfig = {
 export const makeSidebarConfig = (
   customSidebarConfig: Partial<SidebarOptions>,
 ) => {
-  const drawerWidthClosed =
+  const targetDrawerWidthClosed =
     customSidebarConfig.drawerWidthClosed ?? sidebarConfig.drawerWidthClosed;
   return {
     ...sidebarConfig,
     ...customSidebarConfig,
-    iconContainerWidth: drawerWidthClosed,
-    iconSize: drawerWidthClosed - sidebarConfig.iconPadding * 2,
-    userBadgeDiameter: drawerWidthClosed - sidebarConfig.userBadgePadding * 2,
+    iconContainerWidth: targetDrawerWidthClosed,
+    iconSize: targetDrawerWidthClosed - sidebarConfig.iconPadding * 2,
+    userBadgeDiameter:
+      targetDrawerWidthClosed - sidebarConfig.userBadgePadding * 2,
   };
 };
 
