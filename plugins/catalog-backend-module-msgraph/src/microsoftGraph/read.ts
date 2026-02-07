@@ -340,7 +340,7 @@ export function resolveRelations(
         return;
       }
 
-      if (retrieveItems(parentGroups, groupId).size === 0) {
+      if (!parentGroups.get(groupId)?.size) {
         ensureItem(parentGroups, groupId, tenantId);
         ensureItem(groupMember, tenantId, groupId);
       }
@@ -552,6 +552,6 @@ function ensureItem(
 function retrieveItems(
   target: Map<string, Set<string>>,
   key: string,
-): Set<string> {
-  return new Set([...(target.get(key) ?? [])].sort());
+): string[] {
+  return [...(target.get(key) ?? [])].sort();
 }
