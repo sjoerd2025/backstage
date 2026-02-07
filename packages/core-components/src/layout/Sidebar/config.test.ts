@@ -21,6 +21,8 @@ describe('makeSidebarConfig', () => {
     // Check derived values
     expect(config.iconContainerWidth).toBe(newWidth);
     expect(config.iconSize).toBe(newWidth - sidebarConfig.iconPadding * 2);
-    expect(config.userBadgeDiameter).toBe(newWidth - sidebarConfig.userBadgePadding * 2);
+    expect(config.userBadgeDiameter).toBe(
+      newWidth - sidebarConfig.userBadgePadding * 2,
+    );
   });
 });
